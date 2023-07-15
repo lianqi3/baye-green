@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const EmptyContainer = styled.div`
   display: flex;
@@ -14,4 +14,4 @@ export const EmptyContainer = styled.div`
     line-height: 14px;
     margin-top: 17px;
   }
-`;
+`

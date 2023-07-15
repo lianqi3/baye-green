@@ -1,46 +1,46 @@
-import { Toast } from 'antd-mobile';
+import { Toast } from 'antd-mobile'
 
-type ValidationStrategy = (value: string, amount: number) => string | null;
+type ValidationStrategy = (value: string, amount: number) => string | null
 
 const isStatusValidation: ValidationStrategy = (value) => {
   if (!value) {
-    return '0';
+    return '0'
   }
-  return null;
-};
+  return null
+}
 
 const isEmptyValidation: ValidationStrategy = (value) => {
   if (value === '') {
-    return '1';
+    return '1'
   }
-  return null;
-};
+  return null
+}
 
 const isNegativeValidation: ValidationStrategy = (value) => {
   if (Number(value) <= 0) {
-    return '2';
+    return '2'
   }
-  return null;
-};
+  return null
+}
 const isMinValidation: ValidationStrategy = (value, amount) => {
   if (Number(value) < amount) {
-    return '3';
+    return '3'
   }
-  return null;
-};
+  return null
+}
 const isMaxValidation: ValidationStrategy = (value, amount) => {
   if (Number(value) > amount) {
-    return '4';
+    return '4'
   }
-  return null;
-};
+  return null
+}
 
 const isInsufficientBalanceValidation: ValidationStrategy = (value, amount) => {
   if (Number(value) > amount) {
-    return '5';
+    return '5'
   }
-  return null;
-};
+  return null
+}
 
 const validate = (
   value: string,
@@ -49,18 +49,18 @@ const validate = (
   t: (key: string) => string,
   errorMessages: { [key: string]: string },
 ): boolean => {
-  const errorKey = strategy(value, amount);
+  const errorKey = strategy(value, amount)
   if (errorKey) {
-    const errorMessage = errorMessages[errorKey];
+    const errorMessage = errorMessages[errorKey]
     Toast.show({
       content: t(errorMessage),
-    });
-    return false;
+    })
+    return false
   }
-  return true;
-};
+  return true
+}
 
-export default validate;
+export default validate
 
 // 调用示例：
 // const value = '10'; // 外部传入的 value

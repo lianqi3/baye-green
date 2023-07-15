@@ -19,9 +19,10 @@ module.exports = {
   },
   plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   rules: {
+    camelcase: 'off',
+    '@typescript-eslist/camelcase': 0,
     '@typescript-eslint/no-explicit-any': 'off',
     'react/react-in-jsx-scope': 'off',
-    camelcase: 'error',
     'spaced-comment': 'error',
     quotes: ['error', 'single'],
     'no-duplicate-imports': 'error',

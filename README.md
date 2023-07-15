@@ -20,7 +20,7 @@
 - eslint
 - prettier
 - ethers ^5.7.2
-- web3-react
+- zustand
 
 ## VirtualList 组件使用
 
@@ -127,7 +127,6 @@ export interface ListResponse<T = any> {
 ## 增加策略模式表单验证
 
 ```ts
-
 const errorMessages = {
   0: '提现或者充值暂未开放',
   1: '请输入金额',
@@ -135,12 +134,12 @@ const errorMessages = {
   3: `金额不能小于${amount}`,
   4: `金额不能大于${amount}`,
   5: '余额不足',
-};
+}
 
-validate(value, amount, isStatusValidation, t, errorMessages); // 执行开关验证
-validate(value, amount, isEmptyValidation, t, errorMessages); // 执行空验证
-validate(value, amount, isNegativeValidation, t, errorMessages); // 执行小于0验证
-validate(value, amount, isInsufficientBalanceValidation, t, errorMessages); // 执行余额不足验证
-validate(value, amount, isMinValidation, t, errorMessages); // 执行最小值验证
-validate(value, amount, isMaxValidation, t, errorMessages); // 执行最大值验证
+validate(value, amount, isStatusValidation, t, errorMessages) // 执行开关验证
+validate(value, amount, isEmptyValidation, t, errorMessages) // 执行空验证
+validate(value, amount, isNegativeValidation, t, errorMessages) // 执行小于0验证
+validate(value, amount, isInsufficientBalanceValidation, t, errorMessages) // 执行余额不足验证
+validate(value, amount, isMinValidation, t, errorMessages) // 执行最小值验证
+validate(value, amount, isMaxValidation, t, errorMessages) // 执行最大值验证
 ```

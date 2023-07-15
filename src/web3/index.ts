@@ -13,7 +13,7 @@ export const changeNetwork = async (targetChainId: number, config?: NetworkConf)
     console.log('当前链: ', chainId)
     console.log('目标链: ', targetChainId)
     if (config !== undefined) {
-      if (ethereum && !config[chainId]) {
+      if (ethereum) {
         if (Number(chainId) !== Number(targetChainId)) {
           console.log('开始切换')
           await provider

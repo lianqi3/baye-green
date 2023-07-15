@@ -1,22 +1,22 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react'
 
 // @ts-ignore
-const LoadingContext = createContext();
+const LoadingContext = createContext()
 
 export function useLoading() {
-  return useContext(LoadingContext);
+  return useContext(LoadingContext)
 }
 type Props = {
-  children: React.ReactNode;
-};
+  children: React.ReactNode
+}
 export function LoadingProvider({ children }: Props) {
-  const [loading, setLoading] = useState(false);
-  const showLoading = () => setLoading(true);
-  const hideLoading = () => setLoading(false);
+  const [loading, setLoading] = useState(false)
+  const showLoading = () => setLoading(true)
+  const hideLoading = () => setLoading(false)
 
   return (
     <LoadingContext.Provider value={{ loading, showLoading, hideLoading }}>
       {children}
     </LoadingContext.Provider>
-  );
+  )
 }

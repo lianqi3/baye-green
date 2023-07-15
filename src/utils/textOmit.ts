@@ -5,9 +5,9 @@ const textOmit = (textValue: string, to: number, from: number) => {
    * 如下效果
    * 0x0171...fB15d680
    */
-  const a = textValue.substring(0, to);
-  const a2 = textValue.substring(textValue.length - from, textValue.length);
-  return `${a}...${a2}`;
-};
+  const a = textValue.substring(0, to)
+  const a2 = textValue.substring(textValue.length - from, textValue.length)
+  return `${a}...${a2}`
+}
 
-export default textOmit;
+export default textOmit

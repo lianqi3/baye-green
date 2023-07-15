@@ -19,7 +19,13 @@ module.exports = {
         profile: true,
       }),
     ],
-    configure: (webpackConfig: { output: any; plugins: any }, { env, paths }: any) => {
+    configure: (
+      webpackConfig: {
+        output: any
+        plugins: any
+      },
+      { env, paths }: any,
+    ) => {
       // 修改build的生成文件名称
       paths.appBuild = 'h5'
       webpackConfig.output = {
@@ -35,19 +41,21 @@ module.exports = {
           }
         })
       }
-      // webpackConfig.pure_funcs = ["console.log"];
+      // webpackConfig.pure_funcs = ['console.log']
       return webpackConfig
     },
   }),
   devServer: (devServerConfig: any) => {
-    devServerConfig.port = process.env.PORT || 3000
+    devServerConfig.port = process.env.PORT
     devServerConfig.host = process.env.HOST
     devServerConfig.open = true
     devServerConfig.proxy = {
       '/api': {
-        target: process.env.URL,
+        target: 'http://spur.baye.test',
         changeOrigin: true,
-        pathRewrite: { '^/api': '' },
+        pathRewrite: {
+          '^/api': '/api',
+        },
       },
     }
     return devServerConfig

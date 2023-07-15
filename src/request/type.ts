@@ -16,13 +16,13 @@ export interface RequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
 export interface Response<T = any> {
   code: number
   msg: string
-  data: T[]
+  data: T
 }
 
 export interface ListResponse<T = any> {
-  current_page: number
-  last_page: number
-  per_page: number
-  total: number
+  current_page: number // 当前页
+  last_page: number // 最后页
+  per_page: number // 每页显示
+  total: number // 数据总量
   data: T[]
 }

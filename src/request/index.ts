@@ -1,9 +1,10 @@
 import Request from './http'
 import { Toast } from 'antd-mobile'
 import * as CONFIG from '@/config/config'
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = '/api/v1'
+
 let requestCount = 0
-let handler: any = null
+const handler: any = null
 const request = new Request({
   baseURL: BASE_URL,
   timeout: 50000,
@@ -12,11 +13,11 @@ const request = new Request({
       requestCount += 1
       // 过滤掉支付接口
       if (!CONFIG.PAY_URL.includes(config.url as string)) {
-        handler = Toast.show({
-          icon: 'loading',
-          content: 'loading...',
-          maskClickable: false,
-        })
+        // handler = Toast.show({
+        //   icon: 'loading',
+        //   content: 'loading...',
+        //   maskClickable: false,
+        // })
       }
       return config
     },

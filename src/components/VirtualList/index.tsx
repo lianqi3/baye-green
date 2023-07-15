@@ -12,7 +12,7 @@ export interface ListResponse<T> {
 }
 interface VirtualListProps {
   children?: (item: any) => JSX.Element | null
-  list: ListResponse<any> | null
+  list: ListResponse<any> | null | undefined
   method: any
   propslimit: number
   itemKey: string
@@ -27,7 +27,7 @@ const InfiniteScrollContent = ({ hasMore }: { hasMore?: boolean }) => {
           <DotLoading />
         </>
       ) : (
-        <span>--- 没有更多了 ---</span>
+        <span>{t('meiYouGengDuoLe')}</span>
       )}
     </>
   )

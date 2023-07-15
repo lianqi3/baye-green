@@ -14,10 +14,12 @@ class Request {
       (config) => {
         if (config && config.headers) {
           config.headers['Content-Type'] = 'application/json'
-          config.headers['X-localization'] = window.localStorage.getItem('i18nextLng') || 'zh'
-          config.headers.authorization = window.localStorage.getItem('token') || ''
+          config.headers['authorization'] = window.localStorage.getItem('token') || ''
+          config.headers['app-key'] = '123456789'
+          config.headers['accept-language'] =
+            window.localStorage.getItem('i18nextLng') === 'tw' ? 'zh-tw' : 'en-us'
+          config.headers['User-Address'] = window.localStorage.getItem('address') || ''
         }
-        // loading/token
         return config
       },
       (err) => {
@@ -26,7 +28,6 @@ class Request {
     )
     this.instance.interceptors.response.use(
       (res) => {
-        // loading/token
         return res.data
       },
       (err) => {
@@ -55,7 +56,6 @@ class Request {
     if (config.interceptors?.requestSuccessFn) {
       config = config.interceptors.requestSuccessFn(config)
     }
-
     // 返回Promise
     return new Promise<T>((resolve, reject) => {
       this.instance
@@ -71,11 +71,16 @@ class Request {
             case 2:
               reject(res)
               break
+            case -2:
+              reject(res)
+              break
             case -1:
-              window.location.replace('/')
               reject(res)
               break
             case -102:
+              reject(res)
+              break
+            case -403:
               reject(res)
               break
             default:

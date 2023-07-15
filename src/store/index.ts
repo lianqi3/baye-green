@@ -1,36 +1,99 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { shallowEqual, TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { apiLogin, apiPair, getLink, getContentList, getOverview, getRankList } from '@/request/api'
+import { create } from 'zustand'
+import { Toast } from 'antd-mobile'
+import {
+  LoginResponse,
+  PairResponse,
+  LinkInfoType,
+  NoticeType,
+  OverviewResponse,
+  RankResponse,
+} from '@/types/api.types'
 
-import rootReducer from './modules/root';
+interface AppStore {
+  token: string | null
+  address: string | null
+  userInfo: LoginResponse | null
+  loginStatus: boolean
+  bind: boolean
+  pair: PairResponse[] | null
+  linkInfo: LinkInfoType | null
+  noticeList: NoticeType[]
+  login: (params: { address: string }) => Promise<void>
+  getPair: () => Promise<void>
+  outLogin: () => void
+  getLinkInfo: () => Promise<void>
+  getNotice: (params: { page: number }) => Promise<void>
+  overviewBlock: OverviewResponse | null
+  getOverviewBlock: () => Promise<void>
+  rank: RankResponse[] | null
+  getRank: () => Promise<void>
+}
 
-const reducers = combineReducers({
-  root: rootReducer,
-});
+const mainStore = create<AppStore>()((set, get) => ({
+  token: null,
+  loginStatus: false,
+  bind: false,
+  address: null,
+  userInfo: null,
+  pair: null,
+  onAlphaMarketTickerRender: null,
+  commonInfoInfo: null,
+  assetsInfo: null,
+  linkInfo: null,
+  noticeList: [], // 公告信息
+  overviewBlock: null, // 全网概览
+  rank: null, // 全网算力排行
+  minerData: null,
+  login: async (params) => {
+    try {
+      const res: any = await apiLogin({
+        wallet_address: params.address,
+      })
+      window.localStorage.setItem('token', res.data.token)
+      set({ loginStatus: true })
+      set({ userInfo: res.data })
+      set({ address: params.address })
+      set({ bind: false })
+    } catch (e: any) {
+      if (e.code === -2) {
+        set({ bind: true })
+      }
+      Toast.show({
+        content: e.msg,
+      })
+      get().outLogin()
+    }
+  },
+  outLogin: () => {
+    console.log('退出登录')
+    localStorage.removeItem('token')
+    set({ userInfo: null })
+    set({ token: null })
+    set({ address: null })
+  },
+  getPair: async () => {
+    const res = await apiPair()
+    set({ pair: res.data })
+  },
+  getLinkInfo: async () => {
+    const res: any = await getLink()
+    set({ linkInfo: res.data })
+  },
+  getNotice: async (params) => {
+    getContentList({ page: params.page }).then((res) => {
+      set({ noticeList: res.data.data })
+    })
+  },
+  getOverviewBlock: async () => {
+    const res: any = await getOverview()
+    set({ overviewBlock: res.data })
+  },
+  getRank: async () => {
+    const { data } = await getRankList()
 
-const persistConfig = {
-  key: 'root',
-  storage,
-  // 配置持久化存在白名单
-  whitelist: ['app'],
-};
-const persistedReducer = persistReducer(persistConfig, reducers);
-const store = configureStore({
-  reducer: persistedReducer,
-  devTools: true,
-});
+    set({ rank: data })
+  },
+}))
 
-// const state = store.getState()
-// types StateType = typeof state
-
-type GetStateFnType = typeof store.getState;
-export type IRootState = ReturnType<GetStateFnType>;
-type DispatchType = typeof store.dispatch;
-
-// useAppSelector的hook
-export const useAppSelector: TypedUseSelectorHook<IRootState> = useSelector;
-export const useAppDispatch: () => DispatchType = useDispatch;
-export const shallowEqualApp = shallowEqual;
-
-export default store;
+export default mainStore

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const PageLoading = styled.div`
   width: 100vw;
@@ -12,4 +12,4 @@ export const PageLoading = styled.div`
   bottom: 0;
   right: 0;
   background-color: black;
-`;
+`

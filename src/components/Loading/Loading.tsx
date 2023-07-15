@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import { SpinLoading } from 'antd-mobile';
+import React from 'react'
+import styled from 'styled-components'
+import { SpinLoading } from 'antd-mobile'
 
-import { useLoading } from './LoadingContext';
+import { useLoading } from './LoadingContext'
 
 const LoadingContainer = styled.div`
   width: 100vw;
@@ -17,18 +17,18 @@ const LoadingContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 9999;
-`;
+`
 export default function Loading() {
   // @ts-ignore
-  const { loading } = useLoading();
+  const { loading } = useLoading()
 
   if (!loading) {
-    return null;
+    return null
   }
 
   return (
     <LoadingContainer>
       <SpinLoading color='#00FFE0' style={{ '--size': '48px' }} />
     </LoadingContainer>
-  );
+  )
 }
